@@ -16,11 +16,20 @@ namespace Project
     {
         RealEstateEntities context = new RealEstateEntities();
         List<Flat> Flats;
+
+        Excel.Application xlApp; // A Microsoft Excel alkalmazás
+        Excel.Workbook xlWB; // A létrehozott munkafüzet
+        Excel.Worksheet xlSheet; // Munkalap a munkafüzeten belül
         public Form1()
         {
             InitializeComponent();
             LoadData();
+            CreateExcel();
         }
+
+        private void CreateExcel()
+        { }
+
 
         private void LoadData()
         {

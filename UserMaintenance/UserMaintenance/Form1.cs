@@ -25,6 +25,7 @@ namespace UserMaintenance
             listUsers.DataSource = users;
             listUsers.ValueMember = "ID";
             listUsers.DisplayMember = "FullName";
+            button1.Text = Resource1.Gombfelirat;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -36,5 +37,8 @@ namespace UserMaintenance
             };
             users.Add(u);
         }
+
+        
     }
+
 }

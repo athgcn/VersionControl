@@ -20,28 +20,35 @@ namespace _6het
         public Form1()
         {
             InitializeComponent();
-            GetexchangeRates();
+            //GetexchangeRates();
+            //Xmlfeldolgozas();
+            SetChart();
 
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
+
+            
         }
 
 
-        private void GetexchangeRates()
+        private string GetexchangeRates()
         {
             var mnbService = new MNBArfolyamServiceSoapClient();
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                currencyNames = comboBox1.SelectedItem.ToString(),
+                startDate = dateTimePicker1.ToString(),
+                endDate = dateTimePicker2.ToString(),
             };
 
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
 
-            //5. FELADAT
-
+            return result;
+        }
+        //5. FELADAT
+        private void Xmlfeldolgozas(string result)
+        {
             // XML document létrehozása és az aktuális XML szöveg betöltése
             var xml = new XmlDocument();
             xml.LoadXml(result);
@@ -66,11 +73,18 @@ namespace _6het
                 var value = decimal.Parse(childElement.InnerText);
                 if (unit != 0)
                     rate.Value = value / unit;
+            }
+        }
 
+        private void SetChart()
+        {
+            Rates.Clear();
+            Xmlfeldolgozas(GetexchangeRates());
 
+            chartRateData.DataSource = Rates;
 
-                //6.FELADAT
-                var series = chartRateData.Series[0];
+            //6.FELADAT
+            var series = chartRateData.Series[0];
                 series.ChartType = SeriesChartType.Line;
                 series.XValueMember = "Date";
                 series.YValueMembers = "Value";
@@ -83,8 +97,25 @@ namespace _6het
                 chartArea.AxisX.MajorGrid.Enabled = false;
                 chartArea.AxisY.MajorGrid.Enabled = false;
                 chartArea.AxisY.IsStartedFromZero = false;
-            }
 
+        }
+
+        private void RefreshData()
+        { }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            SetChart();
+        }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            SetChart();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetChart();
         }
     }
 }

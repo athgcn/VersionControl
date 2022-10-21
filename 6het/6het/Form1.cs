@@ -17,17 +17,20 @@ namespace _6het
     public partial class Form1 : Form
     {
         BindingList<RateData> Rates = new BindingList<RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
         public Form1()
         {
             InitializeComponent();
+
+            CurrFeltoltes(GetCurrencies());
             //GetexchangeRates();
             //Xmlfeldolgozas();
             SetChart();
 
             dataGridView1.DataSource = Rates;
             chartRateData.DataSource = Rates;
+            comboBox1.DataSource = Currencies;
 
-            
         }
 
 
@@ -66,6 +69,9 @@ namespace _6het
 
                 // Valuta
                 var childElement = (XmlElement)element.ChildNodes[0];
+
+                if (childElement == null)
+                    continue;
                 rate.Currency = childElement.GetAttribute("curr");
 
                 // Érték
@@ -99,6 +105,28 @@ namespace _6het
                 chartArea.AxisY.IsStartedFromZero = false;
 
         }
+
+        private void CurrFeltoltes(string result)
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(result);
+
+            foreach (XmlElement element in xml.DocumentElement.ChildNodes[0])
+            {
+                var currency = element.InnerText;
+                Currencies.Add(currency);
+            }
+        }
+
+        private string GetCurrencies()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+            var request = new GetCurrenciesRequestBody();
+            var response = mnbService.GetCurrencies(request);
+            var result = response.GetCurrenciesResult;
+            return result;
+        }
+
 
         private void RefreshData()
         { }

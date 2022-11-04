@@ -12,6 +12,7 @@ namespace _7het.Entities
     //Label helyett a Toy osztályból származzon. 
     public class Toy : Abstractions.Toy
     {
+        public SolidBrush BallColor { get; private set; }
         /*
          public Ball()
          {
@@ -31,10 +32,16 @@ namespace _7het.Entities
 
          //Hozz létre egy új függvényt DrawImage néven és Graphics típusú bemeneti paraméterrel
          */
+
+        public Ball(Color color)
+        {
+            BallColor = new SolidBrush(color);
+        }
+
         protected override void DrawImage(Graphics g)
         {
             //metódusban rajzolj ki egy a vezérlőbe illeszkedő, kitöltött kék kört a Graphics osztály segítségével.
-            g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, Width, Height);
+            g.FillEllipse(BallColor, 0, 0, Width, Height);
         }
 
         /*
@@ -45,5 +52,6 @@ namespace _7het.Entities
         }
         */
 
+        public 
     } 
 }

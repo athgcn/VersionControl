@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace _7het.Entities
 {
     //Label helyett a Toy osztályból származzon. 
-    public class Ball : Toy
+    public class Toy : Abstractions.Toy
     {
         /*
          public Ball()

@@ -14,12 +14,13 @@ namespace _7het
     public partial class Form1 : Form
     {
         //Hozz létre a Form1 osztály szintjén egy Ball típusú elemekből álló listát _balls néven.
-        private List<Ball> _balls = new List<Ball>();
+        //private List<Ball> _balls = new List<Ball>();
+        private List<Toy> _toys = new List<Toy>();
 
         //Hozz létre egy BallFactory típusú kifejtett propertyt is Factory néven
-        private BallFactory _factory;
+        private IToyFactory _factory;
 
-        public BallFactory Factory
+        public IToyFactory Factory
         {
             get { return _factory; }
             set { _factory = value; }
@@ -30,7 +31,7 @@ namespace _7het
             InitializeComponent();
 
             //A konstruktorban töltsd fel a Factory változót egy BallFactory példánnyal
-            Factory = new BallFactory();
+            Factory = new IToyFactory();
         }
 
         private void createTimer_Tick(object sender, EventArgs e)
@@ -40,10 +41,10 @@ namespace _7het
             * (Ezzel a képernyőn kívül jön majd létre a labda és a futószalagon szép 
             * folyamatosan úszik majd be.)*/
 
-            var ball = Factory.CreateNew();
-            _balls.Add(ball);
-            ball.Left = -ball.Width;
-            mainPanel.Controls.Add(ball);
+            var toy = Factory.CreateNew();
+            _toys.Add(toy);
+            toy.Left = -toy.Width;
+            mainPanel.Controls.Add(toy);
         }
 
         private void conveyorTimer_Tick(object sender, EventArgs e)
@@ -52,20 +53,20 @@ namespace _7het
              * Ezen felül egy a cikluson kívüli segédváltozóval tárold le a leginkább jobbra levő Ball példány pozícióját.*/
 
             var maxPosition = 0;
-            foreach (var ball in _balls)
+            foreach (var toy in _toys)
             {
-                ball.MoveToy();
-                if (ball.Left > maxPosition)
-                    maxPosition = ball.Left;
+                toy.MoveToy();
+                if (toy.Left > maxPosition)
+                    maxPosition = Toy.Left;
             }
 
             //A ciklus után, ha a legnagyobb pozíció eléri az 1000-et akkor tárold le egy változóba a _balls lista
             //első elemét és töröld ki a listából és a Form vezérlőiből is.
             if (maxPosition > 1000)
             {
-                var oldestBall = _balls[0];
-                mainPanel.Controls.Remove(oldestBall);
-                _balls.Remove(oldestBall);
+                var oldestToy = _toys[0];
+                mainPanel.Controls.Remove(oldestToy);
+                _toys.Remove(oldestToy);
             }
 
 

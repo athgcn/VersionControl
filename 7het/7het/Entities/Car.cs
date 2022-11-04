@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _7het.Entities
 {
-    public class Car : Toy
+    public class Car : Abstractions.Toy
     {
         //Graphics osztály segítségével töltsd be a kisautó képét a Car felületére.
         protected override void DrawImage(Graphics g)

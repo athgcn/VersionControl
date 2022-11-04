@@ -9,12 +9,12 @@ namespace _7het.Entities
 {
     //A BallFactory osztály ősei közé sorold fel az IToyFactory interfészt.
     //Írd át a CreateNew függvény visszatérési értékét Toy típusra
-    public class BallFactory: IToyFactory
+    public class IToyFactory: Abstractions.IToyFactory
     {
         //Az osztálynak legyen egy publikus függvénye CreateNew néven Ball visszatérési értékkel
-        public Toy CreateNew()
+        public Abstractions.Toy CreateNew()
         {
-            return new Ball();
+            return new Toy();
         }
     }
 }

@@ -96,5 +96,21 @@ namespace _7het
             _nextToy.Left = lblNext.Left;
             Controls.Add(_nextToy);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Az eseménykezelőben hozz létre egy változót button néven, amiben a sender-t Button-á cast-olva tárolod. Ezenkívül példányosíts egy ColorDialog-ot is.
+            var button = (Button)sender;
+            var colorPicker = new ColorDialog();
+
+            //Nyisd meg a ColorDialog-ot, és ha nem OK-al zárul be, akkor lépj ki a függvényből.
+            colorPicker.Color = button.BackColor;
+            if (colorPicker.ShowDialog() != DialogResult.OK)
+                return;
+
+            //Ellenkező esetben állítsd át a button színét arra, amit a felhasználó a ColorPicker-ben kiválasztott.
+            button.BackColor = colorPicker.Color;
+
+        }
     }
 }

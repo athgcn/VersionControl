@@ -11,11 +11,13 @@ using System.Windows.Forms;
 
 namespace _7het
 {
+    private Toy _nextToy;
+
     public partial class Form1 : Form
     {
         //Hozz létre a Form1 osztály szintjén egy Ball típusú elemekből álló listát _balls néven.
         //private List<Ball> _balls = new List<Ball>();
-        private List<Toy> _toys = new List<Toy>();
+        private List <Toy> _toys = new List<Toy> ();
 
         //Hozz létre egy BallFactory típusú kifejtett propertyt is Factory néven
         private IToyFactory _factory;
@@ -23,7 +25,9 @@ namespace _7het
         public IToyFactory Factory
         {
             get { return _factory; }
-            set { _factory = value; }
+            set { _factory = value;
+                   DisplayNext();
+            }
         }
 
         public Form1()
@@ -70,6 +74,27 @@ namespace _7het
             }
 
 
+        }
+
+        private void btnSelectCar_Click(object sender, EventArgs e)
+        {
+            Factory = new CarFactory();
+
+        }
+
+        private void btnSelectBall_Click(object sender, EventArgs e)
+        {
+            Factory = new BallFactory();
+        }
+
+        private void DisplayNext()
+        {
+            if (_nextToy != null)
+                Controls.Remove(_nextToy);
+            _nextToy = Factory.CreateNew();
+            _nextToy.Top = lblNext.Top + lblNext.Height + 20;
+            _nextToy.Left = lblNext.Left;
+            Controls.Add(_nextToy);
         }
     }
 }

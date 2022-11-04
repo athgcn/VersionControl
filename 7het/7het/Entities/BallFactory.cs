@@ -16,5 +16,10 @@ namespace _7het.Entities
         {
             return new Toy();
         }
+
+        public static implicit operator IToyFactory(CarFactory v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

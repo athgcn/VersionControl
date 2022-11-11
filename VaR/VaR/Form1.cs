@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace VaR
 
         //Hozz létre egy PortfolioItem típusú elemekből álló Portfolio nevű listát a Form1 szintjén
         List<PortfolioItem> Portfolio = new List<PortfolioItem>();
+        List<PortfolioItem> Nyereségek = new List<PortfolioItem>();
         public Form1()
         {
             InitializeComponent();
@@ -76,12 +78,32 @@ namespace VaR
             return value;
         }
 
+        //Egy gombra kattintva jöjjön fel egy mentés ablak, ahol a felhasználó megadhatja, hová szeretné elmenteni a nyereség listát
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //A fájl első sorában szerepeljen a fejléc, mely az "Időszak" és a "Nyereség" szavakat tartalmazza
+            //A sorokban először a lista aktuális elemszáma, majd a megfelelő elem értéke jelenjen meg
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog () !=DialogResult.OK) return;
 
+            using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
+            {
+                sw.Write("Időszak");
+                sw.Write(";");
+                sw.Write("Nyereség");
+                int counter = 0;
 
-
-
-
-
+                foreach(var s in Nyereségek)
+                {
+                    counter++;
+                    sw.WriteLine();
+                    sw.Write(counter);
+                    sw.Write(";");
+                    sw.Write(s.ToString());
+                }
+            }   
+         
+        }   
 
     }
 }

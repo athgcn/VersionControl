@@ -149,5 +149,12 @@ namespace _9het
             return death;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                textBox1.Text = openFileDialog.FileName;
+            }
+        }
     }
 }

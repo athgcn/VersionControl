@@ -13,6 +13,12 @@ namespace _10het
 {
     GameController gc = new GameController();
     GameArea ga;
+
+    int populationSize = 100;
+    int nbrOfSteps = 10;
+    int nbrOfStepsIncrement = 10;
+    int generation = 1;
+
     public partial class Form1 : Form
     {
         public Form1()
